@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wunderkapsel – Dreh dran. Freu dich.</title>
+<meta name="description" content="Wunderkapsel bringt Spielzeug-Kapselautomaten zu Geschäften im Norden Deutschlands. Kostenlos für Standorte, mit Umsatzbeteiligung.">
+<link rel="icon" href="logo.png">
+<style>
+  :root{
+    --navy:#16284A; --navy-soft:#1B3A52; --blue:#4A9EE8; --blue-soft:#eaf4fd;
+    --bg:#ffffff; --surface:#f6faff; --text:#16284A; --text-muted:#5b7390; --border:#e4edf7;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0d1420; --surface:#141f30; --text:#eef4fb; --text-muted:#9bb0c8; --border:#223049; --blue-soft:#17283f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d1420; --surface:#141f30; --text:#eef4fb; --text-muted:#9bb0c8; --border:#223049; --blue-soft:#17283f;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth; scroll-padding-top:70px;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+    line-height:1.6;
+  }
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 24px;}
+
+  header{
+    position:sticky; top:0; z-index:50; background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--border);
+    padding-top:env(safe-area-inset-top,0px);
+  }
+  nav.bar{display:flex; align-items:center; justify-content:space-between; padding:14px 24px; max-width:1040px; margin:0 auto;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.02em; font-size:1.05rem;}
+  .brand img{width:30px; height:30px; border-radius:8px;}
+  nav.links{display:flex; gap:22px; font-size:.92rem; font-weight:600;}
+  nav.links a{text-decoration:none; color:var(--text-muted);}
+  nav.links a:hover{color:var(--blue);}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:999px;
+    font-weight:700; font-size:.95rem; text-decoration:none; border:2px solid transparent; cursor:pointer;
+  }
+  .btn-primary{background:var(--navy); color:#fff;}
+  .btn-primary:hover{background:var(--blue);}
+  :root[data-theme="dark"] .btn-primary, @media (prefers-color-scheme: dark){ }
+  .btn-ghost{border-color:var(--border); color:var(--text);}
+  .btn-ghost:hover{border-color:var(--blue); color:var(--blue);}
+  .btn-sm{padding:9px 16px; font-size:.85rem;}
+
+  section{padding:76px 0;}
+  .hero{padding-top:64px; padding-bottom:56px; text-align:center;}
+  .hero img.logo-big{width:96px; height:96px; margin:0 auto 28px; border-radius:22px;}
+  h1{font-size:clamp(2rem,5vw,3.1rem); line-height:1.1; margin-bottom:16px; letter-spacing:-0.01em;}
+  .lead{font-size:1.15rem; color:var(--text-muted); max-width:560px; margin:0 auto 34px;}
+  .cta-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+
+  .eyebrow{font-size:.8rem; font-weight:800; letter-spacing:.08em; color:var(--blue); text-transform:uppercase; margin-bottom:10px;}
+  h2{font-size:clamp(1.5rem,3vw,2.1rem); margin-bottom:12px;}
+  .section-head{text-align:center; max-width:560px; margin:0 auto 48px;}
+  .section-head p{color:var(--text-muted);}
+
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .step{background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:30px 24px; text-align:center;}
+  .step-num{width:44px; height:44px; border-radius:50%; background:var(--blue-soft); color:var(--blue); font-weight:800;
+    display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:1.05rem;}
+  .step h3{font-size:1.05rem; margin-bottom:6px;}
+  .step p{color:var(--text-muted); font-size:.92rem;}
+
+  .price-card{
+    background:#fff; color:var(--navy); border:2px solid var(--border); border-radius:24px; padding:48px; text-align:center;
+  }
+  :root[data-theme="dark"] .price-card{background:var(--surface);}
+  @media (prefers-color-scheme: dark){ .price-card{background:var(--surface);} }
+  .price-card .big{font-size:clamp(2.2rem,6vw,3.4rem); font-weight:800; letter-spacing:-0.01em; color:var(--navy);}
+  :root[data-theme="dark"] .price-card .big, @media (prefers-color-scheme: dark){ .price-card .big{color:var(--blue);} }
+  .price-card .sub{color:var(--text-muted); margin-top:10px;}
+
+  .chips{display:flex; gap:12px; flex-wrap:wrap; justify-content:center;}
+  .chip{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 22px; font-weight:700; font-size:.95rem; min-width:140px; text-align:center;}
+
+  .helden{background:var(--blue-soft); border-radius:24px; padding:44px; display:flex; gap:28px; align-items:center; flex-wrap:wrap;}
+  .helden .mark{width:64px; height:64px; border-radius:16px; background:var(--blue); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:1.6rem;}
+  .helden h2{margin-bottom:8px;}
+  .helden p{color:var(--text-muted); max-width:560px;}
+
+  .benefits{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:48px;}
+  .benefit{display:flex; gap:12px; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:18px 20px;}
+  .benefit .dot{width:8px; height:8px; border-radius:50%; background:var(--blue); margin-top:8px; flex-shrink:0;}
+  .benefit p{font-size:.92rem; color:var(--text-muted);}
+  .benefit strong{display:block; margin-bottom:2px; font-size:.97rem; color:var(--text);}
+
+  .calc{background:var(--surface); border:1px solid var(--border); border-radius:24px; padding:40px; margin-bottom:40px;}
+  .calc h3{font-size:1.2rem; margin-bottom:4px;}
+  .calc .calc-sub{color:var(--text-muted); font-size:.9rem; margin-bottom:28px;}
+  .slider-row{display:flex; align-items:center; gap:16px; margin-bottom:30px;}
+  input[type=range]{flex:1; accent-color:var(--blue); height:6px;}
+  .slider-val{font-weight:800; font-size:1.1rem; min-width:118px; text-align:right;}
+  .calc-results{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:18px;}
+  .result-box{background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:18px; text-align:center;}
+  .result-box .label{font-size:.78rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; font-weight:700;}
+  .result-box .val{font-size:1.15rem; font-weight:800; color:var(--navy);}
+  :root[data-theme="dark"] .result-box .val{color:var(--blue);}
+  @media (prefers-color-scheme: dark){ .result-box .val{color:var(--blue);} }
+  .calc-note{font-size:.82rem; color:var(--text-muted); line-height:1.6;}
+
+  .faq{display:grid; gap:12px;}
+  details{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px 20px;}
+  summary{cursor:pointer; font-weight:700; font-size:.95rem; list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  details p{margin-top:10px; color:var(--text-muted); font-size:.92rem;}
+
+  .partner-cta{text-align:center; margin-top:36px;}
+
+  footer{border-top:1px solid var(--border); padding:40px 0; margin-top:20px;}
+  .foot-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  .foot-brand{display:flex; align-items:center; gap:8px; font-weight:800; font-size:.92rem;}
+  .foot-brand img{width:22px; height:22px; border-radius:6px;}
+  .foot-links{display:flex; gap:18px; font-size:.85rem; flex-wrap:wrap;}
+  .foot-links a{text-decoration:none; color:var(--text-muted);}
+  .foot-links a:hover{color:var(--blue);}
+  .foot-note{color:var(--text-muted); font-size:.78rem; margin-top:18px;}
+
+  @media (max-width:760px){
+    nav.links{display:none;}
+    .steps{grid-template-columns:1fr;}
+    .helden{flex-direction:column; text-align:center;}
+    section{padding:52px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="bar">
+    <div class="brand"><img src="logo.png" alt="Wunderkapsel Logo">WUNDERKAPSEL</div>
+    <nav class="links">
+      <a href="#funktion">So funktioniert's</a>
+      <a href="#sortiment">Sortiment</a>
+      <a href="#helden">Wunder für kleine Helden</a>
+      <a href="#partner">Partner werden</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#partner">Partner werden</a>
+  </nav>
+</header>
+
+<section class="hero wrap">
+  <img class="logo-big" src="logo.png" alt="Wunderkapsel Logo">
+  <h1>Dreh dran.<br>Freu dich.</h1>
+  <p class="lead">Kleine Kapsel. Große Überraschung. Wunderkapsel bringt Spielzeug, Sammelspaß und kleine Überraschungsmomente direkt zu den Menschen – einfach, sauber und mit einem Lächeln.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="#partner">Standort werden</a>
+    <a class="btn btn-ghost" href="https://instagram.com/wunderkapsel" target="_blank" rel="noopener">Auf Instagram folgen</a>
+  </div>
+</section>
+
+<section id="funktion" class="wrap">
+  <div class="section-head">
+    <div class="eyebrow">So funktioniert's</div>
+    <h2>Drei Schritte zur Überraschung</h2>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><h3>Drehen</h3><p>Such dir deinen Wunderkapsel-Automaten in deiner Nähe.</p></div>
+    <div class="step"><div class="step-num">02</div><h3>Überraschen lassen</h3><p>Dreh am Automaten und hol dir deine Kapsel.</p></div>
+    <div class="step"><div class="step-num">03</div><h3>Freuen</h3><p>Welche Überraschung steckt wohl drin?</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="price-card">
+    <div class="big">1 Dreh. 1 Kapsel. 2&nbsp;€.</div>
+    <div class="sub">Einfach, fair, ohne Kleingedrucktes.</div>
+  </div>
+</section>
+
+<section id="sortiment" class="wrap">
+  <div class="section-head">
+    <div class="eyebrow">Sortiment</div>
+    <h2>Was steckt drin?</h2>
+    <p>Von kleinen Figuren bis zu coolen Überraschungen – unser Sortiment wechselt regelmäßig.</p>
+  </div>
+  <div class="chips">
+    <div class="chip">Figuren</div>
+    <div class="chip">Sammeln</div>
+    <div class="chip">Fidget &amp; Fun</div>
+    <div class="chip">Überraschungen</div>
+  </div>
+</section>
+
+<section id="helden" class="wrap">
+  <div class="helden">
+    <div class="mark">💙</div>
+    <div>
+      <h2>Kleine Wunder für große Herzen</h2>
+      <p>Wunderkapsel spendet regelmäßig einen Teil unserer Erlöse an <strong>Wunder für kleine Helden</strong> – ein Projekt, das kranke und benachteiligte Kinder unterstützt. Jede gedrehte Kapsel trägt ein kleines bisschen dazu bei.</p>
+    </div>
+  </div>
+</section>
+
+<section id="partner" class="wrap">
+  <div class="section-head">
+    <div class="eyebrow">Für Unternehmen</div>
+    <h2>Werde Wunderkapsel-Standort</h2>
+    <p>Du hast einen passenden Standort und möchtest deinen Besuchern eine kleine Überraschung bieten? Dann lass uns sprechen.</p>
+  </div>
+
+  <div class="benefits">
+    <div class="benefit"><div class="dot"></div><div><strong>Kostenlos für dich</strong><p>Keine Kosten, kein Aufwand – wir übernehmen Aufstellung, Befüllung und Wartung komplett.</p></div></div>
+    <div class="benefit"><div class="dot"></div><div><strong>Attraktive Umsatzbeteiligung</strong><p>Du verdienst einfach mit, ganz ohne eigenen Einsatz.</p></div></div>
+    <div class="benefit"><div class="dot"></div><div><strong>Unverbindliche Probezeit</strong><p>Erst testen, dann entscheiden – jederzeit kündbar.</p></div></div>
+    <div class="benefit"><div class="dot"></div><div><strong>Kaum Platzbedarf</strong><p>Kompakt, sauber, ohne Stromanschluss – passt in jeden Eingangsbereich.</p></div></div>
+  </div>
+
+  <div class="calc">
+    <h3>Rechne es dir aus</h3>
+    <div class="calc-sub">Ein Beispiel, wie sich deine Beteiligung je nach Verkäufen summieren könnte.</div>
+    <div class="slider-row">
+      <input type="range" id="verkaeufe" min="1" max="50" value="15">
+      <div class="slider-val"><span id="verkaeufe-val">15</span> Verkäufe/Tag</div>
+    </div>
+    <div class="calc-results">
+      <div class="result-box"><div class="label">Pro Tag</div><div class="val" id="res-tag">–</div></div>
+      <div class="result-box"><div class="label">Pro Monat</div><div class="val" id="res-monat">–</div></div>
+      <div class="result-box"><div class="label">Pro Jahr</div><div class="val" id="res-jahr">–</div></div>
+    </div>
+    <div class="calc-note">Die genaue Umsatzbeteiligung hängt vom jeweiligen Standort ab und liegt üblicherweise zwischen 20&nbsp;% und 40&nbsp;%. Dieses Rechenbeispiel dient nur zur groben Orientierung bei einem Kapselpreis von 2&nbsp;€ und ist keine Garantie oder Zusicherung.</div>
+  </div>
+
+  <div class="faq">
+    <details>
+      <summary>Wie lange bin ich gebunden?</summary>
+      <p>Gar nicht lange – es gibt eine unverbindliche Probezeit, danach kannst du jederzeit mit kurzer Frist kündigen.</p>
+    </details>
+    <details>
+      <summary>Wer kümmert sich um Befüllung und Wartung?</summary>
+      <p>Das übernehmen wir vollständig. Für dich entsteht kein laufender Aufwand.</p>
+    </details>
+    <details>
+      <summary>Wer haftet bei Schäden am Automaten?</summary>
+      <p>Das liegt bei uns als Betreiber – wir sind entsprechend versichert.</p>
+    </details>
+    <details>
+      <summary>Ist das Spielzeug sicher für Kinder?</summary>
+      <p>Ja, ausschließlich CE-gekennzeichnete, generische Ware mit den üblichen Sicherheitshinweisen.</p>
+    </details>
+  </div>
+
+  <div class="partner-cta">
+    <a class="btn btn-primary" href="mailto:wunderkapsel@gmail.com?subject=Standortanfrage%20Wunderkapsel">Jetzt anfragen</a>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <div class="foot-brand"><img src="logo.png" alt="Wunderkapsel Logo">WUNDERKAPSEL</div>
+    <div class="foot-links">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="https://instagram.com/wunderkapsel" target="_blank" rel="noopener">Instagram</a>
+      <a href="mailto:wunderkapsel@gmail.com">wunderkapsel@gmail.com</a>
+    </div>
+  </div>
+  <div class="foot-note">© Wunderkapsel · Dreh dran – Freu dich.</div>
+</footer>
+
+<script>
+  const slider = document.getElementById('verkaeufe');
+  const val = document.getElementById('verkaeufe-val');
+  const resTag = document.getElementById('res-tag');
+  const resMonat = document.getElementById('res-monat');
+  const resJahr = document.getElementById('res-jahr');
+  const PREIS = 2;
+  const MIN_SATZ = 0.20;
+  const MAX_SATZ = 0.40;
+
+  function fmt(n){
+    return n.toLocaleString('de-DE', {minimumFractionDigits:0, maximumFractionDigits:0}) + ' €';
+  }
+
+  function update(){
+    const n = parseInt(slider.value, 10);
+    val.textContent = n;
+    const umsatzTag = n * PREIS;
+    const minTag = umsatzTag * MIN_SATZ;
+    const maxTag = umsatzTag * MAX_SATZ;
+    resTag.textContent = fmt(minTag) + ' – ' + fmt(maxTag);
+    resMonat.textContent = fmt(minTag*30) + ' – ' + fmt(maxTag*30);
+    resJahr.textContent = fmt(minTag*365) + ' – ' + fmt(maxTag*365);
+  }
+  slider.addEventListener('input', update);
+  update();
+</script>
+
+</body>
+</html>
